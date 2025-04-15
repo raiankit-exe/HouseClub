@@ -5,6 +5,7 @@ const session = require('express-session');
 const passport = require('passport');
 // We will configure the Google strategy in the next step
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const path = require('path'); // Import path module
 
 const app = express();
 
@@ -73,6 +74,18 @@ passport.deserializeUser((obj, done) => {
 app.use(express.static(__dirname)); // Serve files from the project root
 
 // --- Routes ---
+
+// Explicitly handle the root route ('/')
+app.get('/', (req, res) => {
+  // Check if user is already authenticated
+  if (req.isAuthenticated()) {
+    // If logged in, maybe redirect to home.html?
+    res.redirect('/home.html'); 
+  } else {
+    // If not logged in, send the login page (index.html)
+    res.sendFile(path.join(__dirname, 'index.html'));
+  }
+});
 
 // Initiates the Google OAuth flow
 app.get('/auth/google', passport.authenticate('google')); // Use passport.authenticate
