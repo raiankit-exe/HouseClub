@@ -71,7 +71,7 @@ passport.deserializeUser((obj, done) => {
 
 // --- Static Files ---
 // Serve frontend files (HTML, CSS, JS)
-app.use(express.static(__dirname)); // Serve files from the project root
+app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from 'public' directory
 
 // --- Routes ---
 
@@ -129,12 +129,12 @@ app.get('/logout', (req, res, next) => {
 });
 
 // --- Server Start --- COMMENTED OUT FOR VERCEL
-/*
+/* // Add comment block back
 const port = process.env.PORT || 3000; 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
-*/
+*/ // Add comment block back
 
 // --- Export the Express app for Vercel ---
 module.exports = app; 
